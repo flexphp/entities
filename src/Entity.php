@@ -34,7 +34,7 @@ abstract class Entity implements EntityInterface
     {
         $toArray = [];
 
-        foreach ($this->attributesHydrated as $attribute) {
+        foreach ($this->attributesHydrated as $index => $attribute) {
             if (property_exists($this, $attribute)) {
                 $toArray[$attribute] = $this->{$attribute};
             }
