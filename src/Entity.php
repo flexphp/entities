@@ -102,7 +102,7 @@ abstract class Entity implements EntityInterface
      */
     public function __toString()
     {
-        return json_encode($this->toArray(), 0);
+        return json_encode($this->toArray(), JSON_ERROR_NONE);
     }
 
     /**
