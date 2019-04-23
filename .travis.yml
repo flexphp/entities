@@ -1,0 +1,13 @@
+language: php
+
+php:
+  - 7.1
+  - 7.2
+  - 7.3
+  - nightly
+
+before_script:
+  - wget -nc http://getcomposer.org/composer.phar
+  - php composer.phar install
+
+script: php composer.phar test
