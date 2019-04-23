@@ -25,11 +25,6 @@ abstract class Entity implements EntityInterface
         $this->hydrate($attributes);
     }
 
-    public function getKeyName(): string
-    {
-        return 'id';
-    }
-
     public function toArray(): array
     {
         $toArray = [];
@@ -57,8 +52,8 @@ abstract class Entity implements EntityInterface
     }
 
     /**
-     * @param  $name
-     * @param  $value
+     * @param string $name
+     * @param mixed $value
      * @return $this
      */
     public function __set($name, $value)
@@ -71,7 +66,7 @@ abstract class Entity implements EntityInterface
     }
 
     /**
-     * @param  $name
+     * @param string $name
      * @return mixed
      */
     public function __get($name)
@@ -80,19 +75,19 @@ abstract class Entity implements EntityInterface
     }
 
     /**
-     * @param  $name
-     * @param  $arguments
+     * @param string $name
+     * @param array $arguments
      * @return $this|mixed
      */
-    public function __call($name, $arguments)
+    public function __call(string $name, array $arguments)
     {
         $attribute = $this->snakeCase($name);
 
         if (count($arguments) > 0) {
-            return self::__set($attribute, ...$arguments);
+            return $this->__set($attribute, ...$arguments);
         }
 
-        return self::__get($attribute);
+        return $this->__get($attribute);
     }
 
     /**
