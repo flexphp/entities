@@ -2,7 +2,6 @@
 
 namespace FlexPHP\Entities\Tests\Unit;
 
-use FlexPHP\Entities\Entity;
 use FlexPHP\Entities\EntityInterface;
 use FlexPHP\Entities\Tests\Mocks\EntityMock;
 use FlexPHP\Entities\Tests\TestCase;
@@ -28,13 +27,12 @@ class EntityTest extends TestCase
 
     public function testItInitializeWithEmptyAttributes()
     {
-        $this->markTestSkipped();
         $entity = new EntityMock([]);
 
         $this->assertSame(null, $entity->foo());
         $this->assertSame(null, $entity->bar());
         $this->assertSame([], $entity->toArray());
-        $this->assertEquals(json_encode([]), $entity);
+        $this->assertEquals(json_encode([]), (string)$entity);
     }
 
     public function testItInitializeWithBoolTrueAttribute()
