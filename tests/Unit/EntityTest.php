@@ -107,16 +107,88 @@ class EntityTest extends TestCase
         $this->assertSame($foo, $entity->toArray()['foo']);
     }
 
+    public function testItInitializeWithEmptyArrayAttribute()
+    {
+        $foo = [];
+
+        $entity = new EntityMock([
+            'foo' => $foo,
+        ]);
+
+        $this->assertSame($foo, $entity->foo());
+        $this->assertSame($foo, $entity->toArray()['foo']);
+    }
+
+    public function testItInitializeWithArrayAttribute()
+    {
+        $foo = ['foo', 'bar'];
+
+        $entity = new EntityMock([
+            'foo' => $foo,
+        ]);
+
+        $this->assertSame($foo, $entity->foo());
+        $this->assertSame($foo, $entity->toArray()['foo']);
+    }
+
+    public function testItInitializeWithKeyArrayAttribute()
+    {
+        $foo = ['foo' => 'bar'];
+
+        $entity = new EntityMock([
+            'foo' => $foo,
+        ]);
+
+        $this->assertSame($foo, $entity->foo());
+        $this->assertSame($foo, $entity->toArray()['foo']);
+    }
+
+    public function testItInitializeWithCamelCaseAttribute()
+    {
+        $fooBar = 'fooBar';
+
+        $entity = new EntityMock([
+            'fooBar' => $fooBar,
+        ]);
+
+        $this->assertSame($fooBar, $entity->fooBar());
+        $this->assertSame($fooBar, $entity->toArray()['fooBar']);
+    }
+
+    public function testItSetAttribute()
+    {
+        $foo = 'foo';
+
+        $entity = new EntityMock();
+        $entity->foo($foo);
+
+        $this->assertSame($foo, $entity->foo());
+        $this->assertSame($foo, $entity->toArray()['foo']);
+    }
+
+    public function testItSetCamelCaseAttribute()
+    {
+        $fooBar = 'fooBar';
+
+        $entity = new EntityMock();
+        $entity->fooBar($fooBar);
+
+        $this->assertSame($fooBar, $entity->fooBar());
+        $this->assertSame($fooBar, $entity->toArray()['fooBar']);
+    }
+
     public function testItSetAttributeInChain()
     {
         $foo = 'foo';
-        $bar = 'bar';
+        $bar = 1;
+        $fooBar = true;
 
         $entity = new EntityMock();
-        $entity->foo($foo)->bar($bar);
+        $entity->foo($foo)->bar($bar)->fooBar($fooBar);
 
         $this->assertSame($foo, $entity->foo());
         $this->assertSame($bar, $entity->bar());
+        $this->assertSame($fooBar, $entity->fooBar());
     }
 
     public function testItGetAsString()

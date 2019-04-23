@@ -4,8 +4,7 @@ namespace FlexPHP\Entities;
 
 /**
  * Class Entity
- *
- * @method $this|int id($id = null)
+ * @package FlexPHP\Entities
  */
 abstract class Entity implements EntityInterface
 {
@@ -31,7 +30,7 @@ abstract class Entity implements EntityInterface
 
         foreach ($this->attributesHydrated as $index => $attribute) {
             if (\property_exists($this, $attribute)) {
-                $toArray[$attribute] = $this->{$attribute};
+                $toArray[$this->camelCase($attribute)] = $this->{$attribute};
             }
         }
 
@@ -45,7 +44,7 @@ abstract class Entity implements EntityInterface
     private function hydrate(array $attributes): self
     {
         foreach ($attributes as $attribute => $value) {
-            $this->{$attribute} = $value;
+            $this->{$this->snakeCase($attribute)} = $value;
         }
 
         return $this;
@@ -84,7 +83,7 @@ abstract class Entity implements EntityInterface
         $attribute = $this->snakeCase($name);
 
         if (\count($arguments) > 0) {
-            return $this->__set($attribute, ...$arguments);
+            return $this->__set($attribute, $arguments[0]);
         }
 
         return $this->__get($attribute);
@@ -101,7 +100,7 @@ abstract class Entity implements EntityInterface
     }
 
     /**
-     * Change to snake_case attribute names
+     * Change to snake_case attribute name
      *
      * @param string $attribute
      * @return string
@@ -109,5 +108,20 @@ abstract class Entity implements EntityInterface
     private function snakeCase(string $attribute): string
     {
         return \mb_strtolower(\preg_replace('~(?<=\\w)([A-Z])~', '_$1', $attribute) ?? $attribute);
+    }
+
+    /**
+     * Change to camelCase attribute name
+     *
+     * @param string $attribute
+     * @return string
+     */
+    private function camelCase(string $attribute): string
+    {
+        $string = \preg_replace_callback('/_(.?)/', function ($matches) {
+            return \ucfirst($matches[1]);
+        }, $attribute);
+
+        return $string ?? $attribute;
     }
 }

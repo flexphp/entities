@@ -2,6 +2,10 @@
 
 namespace FlexPHP\Entities;
 
+/**
+ * Interface EntityInterface
+ * @package FlexPHP\Entities
+ */
 interface EntityInterface
 {
     /**
