@@ -30,7 +30,7 @@ abstract class Entity implements EntityInterface
         $toArray = [];
 
         foreach ($this->attributesHydrated as $index => $attribute) {
-            if (property_exists($this, $attribute)) {
+            if (\property_exists($this, $attribute)) {
                 $toArray[$attribute] = $this->{$attribute};
             }
         }
@@ -83,7 +83,7 @@ abstract class Entity implements EntityInterface
     {
         $attribute = $this->snakeCase($name);
 
-        if (count($arguments) > 0) {
+        if (\count($arguments) > 0) {
             return $this->__set($attribute, ...$arguments);
         }
 
@@ -97,7 +97,7 @@ abstract class Entity implements EntityInterface
      */
     public function __toString()
     {
-        return json_encode($this->toArray(), JSON_ERROR_NONE);
+        return (string)\json_encode($this->toArray(), JSON_ERROR_NONE);
     }
 
     /**
@@ -108,6 +108,6 @@ abstract class Entity implements EntityInterface
      */
     private function snakeCase(string $attribute): string
     {
-        return \mb_strtolower(\preg_replace('~(?<=\\w)([A-Z])~', '_$1', $attribute));
+        return \mb_strtolower(\preg_replace('~(?<=\\w)([A-Z])~', '_$1', $attribute) ?? $attribute);
     }
 }
