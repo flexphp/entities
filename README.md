@@ -1,5 +1,8 @@
 # Entities
 
+[![Stable Status](https://travis-ci.org/flexphp/entities.svg?branch=master)](https://travis-ci.org/flexphp/entities)
+[![Unstable Status](https://travis-ci.org/flexphp/entities.svg?branch=develop)](https://travis-ci.org/flexphp/entities)
+
 [![Latest Stable Version](https://poser.pugx.org/freddiegar/entities/v/stable)](https://packagist.org/packages/flexphp/entities)
 [![Total Downloads](https://poser.pugx.org/flexphp/entities/downloads)](https://packagist.org/packages/flexphp/entities)
 [![Latest Unstable Version](https://poser.pugx.org/flexphp/entities/v/unstable)](https://packagist.org/packages/flexphp/entities)
