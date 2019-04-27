@@ -9,7 +9,7 @@
 
 One Entity, Any Framework
 
-Change between framework without problems, Keep It Simple, SOLID and DRY with FlexPHP.
+Change between frameworks when you need. Keep It Simple, SOLID and DRY with FlexPHP.
 
 ## Installation
 
