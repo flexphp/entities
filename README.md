@@ -4,7 +4,7 @@
 [![Total Downloads](https://poser.pugx.org/flexphp/entities/downloads)](https://packagist.org/packages/flexphp/entities)
 [![Latest Unstable Version](https://poser.pugx.org/flexphp/entities/v/unstable)](https://packagist.org/packages/flexphp/entities)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/flexphp/flex-entities/badges/quality-score.png)](https://scrutinizer-ci.com/g/flexphp/flex-entities)
-[![Code Coverage](https://scrutinizer-ci.com/g/flexphp/flex-entities/badges/coverage.png?b=develop)](https://scrutinizer-ci.com/g/flexphp/flex-entities/?branch=develop)
+[![Code Coverage](https://scrutinizer-ci.com/g/flexphp/flex-entities/badges/coverage.png)](https://scrutinizer-ci.com/g/flexphp/flex-entities)
 [![License](https://poser.pugx.org/flexphp/entities/license)](https://packagist.org/packages/flexphp/entities)
 [![composer.lock](https://poser.pugx.org/flexphp/entities/composerlock)](https://packagist.org/packages/flexphp/entities)
 
