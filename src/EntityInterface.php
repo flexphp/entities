@@ -11,7 +11,7 @@ interface EntityInterface
     /**
      * Get attributes as array
      *
-     * @return array
+     * @return array<string>
      */
     public function toArray(): array;
 }

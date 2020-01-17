@@ -11,19 +11,22 @@ abstract class Entity implements EntityInterface
     /**
      * Save attribute names hydrate on instance
      *
-     * @var array
+     * @var array<string>
      */
     private $attributesHydrated = [];
 
     /**
      * Entity constructor.
-     * @param array $attributes
+     * @param array<string> $attributes
      */
     public function __construct(array $attributes = [])
     {
         $this->hydrate($attributes);
     }
 
+    /**
+     * @return array<string>
+     */
     public function toArray(): array
     {
         $toArray = [];
@@ -38,7 +41,7 @@ abstract class Entity implements EntityInterface
     }
 
     /**
-     * @param  array $attributes
+     * @param  array<string> $attributes
      * @return $this
      */
     private function hydrate(array $attributes): self
@@ -75,7 +78,7 @@ abstract class Entity implements EntityInterface
 
     /**
      * @param string $name
-     * @param array $arguments
+     * @param array<int> $arguments
      * @return $this|mixed
      */
     public function __call(string $name, array $arguments)
