@@ -19,9 +19,7 @@ abstract class Entity implements EntityInterface
     private $attributesHydrated = [];
 
     /**
-     * Entity constructor.
-     *
-     * @param array<string> $attributes
+     * @param array<string, mixed> $attributes
      */
     public function __construct(array $attributes = [])
     {
@@ -29,12 +27,9 @@ abstract class Entity implements EntityInterface
     }
 
     /**
-     * @param string $name
      * @param mixed $value
-     *
-     * @return $this
      */
-    public function __set($name, $value)
+    public function __set(string $name, $value): void
     {
         $this->{$name} = $value;
 
@@ -54,14 +49,14 @@ abstract class Entity implements EntityInterface
     /**
      * @param array<int> $arguments
      *
-     * @return $this|mixed
+     * @return mixed
      */
     public function __call(string $name, array $arguments)
     {
         $attribute = $this->snakeCase($name);
 
-        if (\count($arguments) > 0) {
-            return $this->__set($attribute, $arguments[0]);
+        if (\count($arguments)) {
+            $this->__set($attribute, $arguments[0]);
         }
 
         return $this->__get($attribute);
