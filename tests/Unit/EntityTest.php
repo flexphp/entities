@@ -184,27 +184,14 @@ class EntityTest extends TestCase
         $this->assertSame($fooBar, $entity->toArray()['fooBar']);
     }
 
-    public function testItSetAttributeInChain(): void
-    {
-        $foo = 'foo';
-        $bar = 1;
-        $fooBar = true;
-
-        $entity = new EntityMock();
-        $entity->foo($foo)->bar($bar)->fooBar($fooBar);
-
-        $this->assertSame($foo, $entity->foo());
-        $this->assertSame($bar, $entity->bar());
-        $this->assertSame($fooBar, $entity->fooBar());
-    }
-
     public function testItGetAsString(): void
     {
         $foo = 'foo';
         $bar = 'bar';
 
         $entity = new EntityMock();
-        $entity->foo($foo)->bar($bar);
+        $entity->foo($foo);
+        $entity->bar($bar);
 
         $this->assertEquals(\json_encode(\compact('foo', 'bar')), $entity);
     }

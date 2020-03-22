@@ -39,8 +39,6 @@ abstract class Entity implements EntityInterface
         $this->{$name} = $value;
 
         $this->attributesHydrated[] = $name;
-
-        return $this;
     }
 
     /**
@@ -86,11 +84,11 @@ abstract class Entity implements EntityInterface
     {
         $toArray = [];
 
-        foreach ($this->attributesHydrated as $index => $attribute) {
+        \array_map(function ($attribute) use (&$toArray): void {
             if (\property_exists($this, $attribute)) {
                 $toArray[$this->camelCase($attribute)] = $this->{$attribute};
             }
-        }
+        }, $this->attributesHydrated);
 
         return $toArray;
     }
