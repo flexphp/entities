@@ -69,11 +69,11 @@ abstract class Entity implements EntityInterface
      */
     public function __toString()
     {
-        return (string)\json_encode($this->toArray(), \JSON_ERROR_NONE);
+        return \json_encode($this->toArray(), \JSON_ERROR_NONE) ?: '';
     }
 
     /**
-     * @return array<string>
+     * @return array<string, mixed>
      */
     public function toArray(): array
     {
@@ -107,7 +107,7 @@ abstract class Entity implements EntityInterface
      */
     private function snakeCase(string $attribute): string
     {
-        return \mb_strtolower(\preg_replace('~(?<=\\w)([A-Z])~', '_$1', $attribute) ?? $attribute);
+        return \strtolower(\preg_replace('~(?<=\\w)([A-Z])~', '_$1', $attribute) ?? $attribute);
     }
 
     /**
