@@ -90,16 +90,12 @@ abstract class Entity implements EntityInterface
 
     /**
      * @param  array<string> $attributes
-     *
-     * @return $this
      */
-    private function hydrate(array $attributes): self
+    private function hydrate(array $attributes): void
     {
         foreach ($attributes as $attribute => $value) {
             $this->{$this->snakeCase($attribute)} = $value;
         }
-
-        return $this;
     }
 
     /**
