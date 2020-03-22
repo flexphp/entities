@@ -1,11 +1,14 @@
-<?php
-
+<?php declare(strict_types=1);
+/*
+ * This file is part of FlexPHP.
+ *
+ * (c) Freddie Gar <freddie.gar@outlook.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 namespace FlexPHP\Entities;
 
-/**
- * Class Entity
- * @package FlexPHP\Entities
- */
 abstract class Entity implements EntityInterface
 {
     /**
@@ -17,6 +20,7 @@ abstract class Entity implements EntityInterface
 
     /**
      * Entity constructor.
+     *
      * @param array<string> $attributes
      */
     public function __construct(array $attributes = [])
@@ -25,37 +29,9 @@ abstract class Entity implements EntityInterface
     }
 
     /**
-     * @return array<string>
-     */
-    public function toArray(): array
-    {
-        $toArray = [];
-
-        foreach ($this->attributesHydrated as $index => $attribute) {
-            if (\property_exists($this, $attribute)) {
-                $toArray[$this->camelCase($attribute)] = $this->{$attribute};
-            }
-        }
-
-        return $toArray;
-    }
-
-    /**
-     * @param  array<string> $attributes
-     * @return $this
-     */
-    private function hydrate(array $attributes): self
-    {
-        foreach ($attributes as $attribute => $value) {
-            $this->{$this->snakeCase($attribute)} = $value;
-        }
-
-        return $this;
-    }
-
-    /**
      * @param string $name
      * @param mixed $value
+     *
      * @return $this
      */
     public function __set($name, $value)
@@ -69,6 +45,7 @@ abstract class Entity implements EntityInterface
 
     /**
      * @param string $name
+     *
      * @return mixed
      */
     public function __get($name)
@@ -77,8 +54,8 @@ abstract class Entity implements EntityInterface
     }
 
     /**
-     * @param string $name
      * @param array<int> $arguments
+     *
      * @return $this|mixed
      */
     public function __call(string $name, array $arguments)
@@ -99,14 +76,41 @@ abstract class Entity implements EntityInterface
      */
     public function __toString()
     {
-        return (string)\json_encode($this->toArray(), JSON_ERROR_NONE);
+        return (string)\json_encode($this->toArray(), \JSON_ERROR_NONE);
+    }
+
+    /**
+     * @return array<string>
+     */
+    public function toArray(): array
+    {
+        $toArray = [];
+
+        foreach ($this->attributesHydrated as $index => $attribute) {
+            if (\property_exists($this, $attribute)) {
+                $toArray[$this->camelCase($attribute)] = $this->{$attribute};
+            }
+        }
+
+        return $toArray;
+    }
+
+    /**
+     * @param  array<string> $attributes
+     *
+     * @return $this
+     */
+    private function hydrate(array $attributes): self
+    {
+        foreach ($attributes as $attribute => $value) {
+            $this->{$this->snakeCase($attribute)} = $value;
+        }
+
+        return $this;
     }
 
     /**
      * Change to snake_case attribute name
-     *
-     * @param string $attribute
-     * @return string
      */
     private function snakeCase(string $attribute): string
     {
@@ -115,9 +119,6 @@ abstract class Entity implements EntityInterface
 
     /**
      * Change to camelCase attribute name
-     *
-     * @param string $attribute
-     * @return string
      */
     private function camelCase(string $attribute): string
     {

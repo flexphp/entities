@@ -1,5 +1,12 @@
-<?php
-
+<?php declare(strict_types=1);
+/*
+ * This file is part of FlexPHP.
+ *
+ * (c) Freddie Gar <freddie.gar@outlook.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 namespace FlexPHP\Entities\Tests\Unit;
 
 use FlexPHP\Entities\EntityInterface;
@@ -8,34 +15,34 @@ use FlexPHP\Entities\Tests\TestCase;
 
 class EntityTest extends TestCase
 {
-    public function testItUseInterface()
+    public function testItUseInterface(): void
     {
         $entity = new EntityMock();
 
         $this->assertInstanceOf(EntityInterface::class, $entity);
     }
 
-    public function testItInitializeWithoutAttributes()
+    public function testItInitializeWithoutAttributes(): void
     {
         $entity = new EntityMock();
 
         $this->assertSame(null, $entity->foo());
         $this->assertSame(null, $entity->bar());
         $this->assertSame([], $entity->toArray());
-        $this->assertEquals(json_encode([]), $entity);
+        $this->assertEquals(\json_encode([]), $entity);
     }
 
-    public function testItInitializeWithEmptyAttributes()
+    public function testItInitializeWithEmptyAttributes(): void
     {
         $entity = new EntityMock([]);
 
         $this->assertSame(null, $entity->foo());
         $this->assertSame(null, $entity->bar());
         $this->assertSame([], $entity->toArray());
-        $this->assertEquals(json_encode([]), (string)$entity);
+        $this->assertEquals(\json_encode([]), (string)$entity);
     }
 
-    public function testItInitializeWithBoolTrueAttribute()
+    public function testItInitializeWithBoolTrueAttribute(): void
     {
         $foo = true;
 
@@ -47,7 +54,7 @@ class EntityTest extends TestCase
         $this->assertSame($foo, $entity->toArray()['foo']);
     }
 
-    public function testItInitializeWithBoolFalseAttribute()
+    public function testItInitializeWithBoolFalseAttribute(): void
     {
         $foo = false;
 
@@ -59,7 +66,7 @@ class EntityTest extends TestCase
         $this->assertSame($foo, $entity->toArray()['foo']);
     }
 
-    public function testItInitializeWithNullAttribute()
+    public function testItInitializeWithNullAttribute(): void
     {
         $foo = null;
 
@@ -71,7 +78,7 @@ class EntityTest extends TestCase
         $this->assertSame($foo, $entity->toArray()['foo']);
     }
 
-    public function testItInitializeWithStringAttribute()
+    public function testItInitializeWithStringAttribute(): void
     {
         $foo = (string)'bar';
 
@@ -83,9 +90,9 @@ class EntityTest extends TestCase
         $this->assertSame($foo, $entity->toArray()['foo']);
     }
 
-    public function testItInitializeWithIntAttribute()
+    public function testItInitializeWithIntAttribute(): void
     {
-        $foo = (int)rand(1, 9);
+        $foo = (int)\rand(1, 9);
 
         $entity = new EntityMock([
             'foo' => $foo,
@@ -95,9 +102,9 @@ class EntityTest extends TestCase
         $this->assertSame($foo, $entity->toArray()['foo']);
     }
 
-    public function testItInitializeWithFloatAttribute()
+    public function testItInitializeWithFloatAttribute(): void
     {
-        $foo = microtime(true);
+        $foo = \microtime(true);
 
         $entity = new EntityMock([
             'foo' => $foo,
@@ -107,7 +114,7 @@ class EntityTest extends TestCase
         $this->assertSame($foo, $entity->toArray()['foo']);
     }
 
-    public function testItInitializeWithEmptyArrayAttribute()
+    public function testItInitializeWithEmptyArrayAttribute(): void
     {
         $foo = [];
 
@@ -119,7 +126,7 @@ class EntityTest extends TestCase
         $this->assertSame($foo, $entity->toArray()['foo']);
     }
 
-    public function testItInitializeWithArrayAttribute()
+    public function testItInitializeWithArrayAttribute(): void
     {
         $foo = ['foo', 'bar'];
 
@@ -131,7 +138,7 @@ class EntityTest extends TestCase
         $this->assertSame($foo, $entity->toArray()['foo']);
     }
 
-    public function testItInitializeWithKeyArrayAttribute()
+    public function testItInitializeWithKeyArrayAttribute(): void
     {
         $foo = ['foo' => 'bar'];
 
@@ -143,7 +150,7 @@ class EntityTest extends TestCase
         $this->assertSame($foo, $entity->toArray()['foo']);
     }
 
-    public function testItInitializeWithCamelCaseAttribute()
+    public function testItInitializeWithCamelCaseAttribute(): void
     {
         $fooBar = 'fooBar';
 
@@ -155,7 +162,7 @@ class EntityTest extends TestCase
         $this->assertSame($fooBar, $entity->toArray()['fooBar']);
     }
 
-    public function testItSetAttribute()
+    public function testItSetAttribute(): void
     {
         $foo = 'foo';
 
@@ -166,7 +173,7 @@ class EntityTest extends TestCase
         $this->assertSame($foo, $entity->toArray()['foo']);
     }
 
-    public function testItSetCamelCaseAttribute()
+    public function testItSetCamelCaseAttribute(): void
     {
         $fooBar = 'fooBar';
 
@@ -177,7 +184,7 @@ class EntityTest extends TestCase
         $this->assertSame($fooBar, $entity->toArray()['fooBar']);
     }
 
-    public function testItSetAttributeInChain()
+    public function testItSetAttributeInChain(): void
     {
         $foo = 'foo';
         $bar = 1;
@@ -191,7 +198,7 @@ class EntityTest extends TestCase
         $this->assertSame($fooBar, $entity->fooBar());
     }
 
-    public function testItGetAsString()
+    public function testItGetAsString(): void
     {
         $foo = 'foo';
         $bar = 'bar';
@@ -199,6 +206,6 @@ class EntityTest extends TestCase
         $entity = new EntityMock();
         $entity->foo($foo)->bar($bar);
 
-        $this->assertEquals(json_encode(compact('foo', 'bar')), $entity);
+        $this->assertEquals(\json_encode(\compact('foo', 'bar')), $entity);
     }
 }
