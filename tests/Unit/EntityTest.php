@@ -90,6 +90,18 @@ class EntityTest extends TestCase
         $this->assertSame($foo, $entity->toArray()['foo']);
     }
 
+    public function testItInitializeWithMbStringAttribute(): void
+    {
+        $foo = (string)'漢字はユニコード';
+
+        $entity = new EntityMock([
+            'foo' => $foo,
+        ]);
+
+        $this->assertSame($foo, $entity->foo());
+        $this->assertSame($foo, $entity->toArray()['foo']);
+    }
+
     public function testItInitializeWithIntAttribute(): void
     {
         $foo = (int)\rand(1, 9);
@@ -150,6 +162,106 @@ class EntityTest extends TestCase
         $this->assertSame($foo, $entity->toArray()['foo']);
     }
 
+    public function testItInitializeStdClassEmptyAttribute(): void
+    {
+        $foo = new \stdClass;
+
+        $entity = new EntityMock([
+            'foo' => $foo,
+        ]);
+
+        $this->assertSame($foo, $entity->foo());
+        $this->assertSame($foo, $entity->toArray()['foo']);
+    }
+
+    public function testItInitializeStdClassAttribute(): void
+    {
+        $foo = new \stdClass;
+        $foo->bar = 'bar';
+        $foo->baz = 'baz';
+
+        $entity = new EntityMock([
+            'foo' => $foo,
+        ]);
+
+        $this->assertSame($foo, $entity->foo());
+        $this->assertSame($foo, $entity->toArray()['foo']);
+    }
+
+    public function testItInitializeClosureAttribute(): void
+    {
+        $foo = function () {
+            return \microtime();
+        };
+
+        $entity = new EntityMock([
+            'foo' => $foo,
+        ]);
+
+        $this->assertSame($foo, $entity->foo());
+        $this->assertSame($foo, $entity->toArray()['foo']);
+    }
+
+    public function testItInitializeClassAttribute(): void
+    {
+        $foo = new \Exception('Test');
+
+        $entity = new EntityMock([
+            'foo' => $foo,
+        ]);
+
+        $this->assertSame($foo, $entity->foo());
+        $this->assertSame($foo, $entity->toArray()['foo']);
+    }
+
+    public function testItInitializeWithDateTimeAttribute(): void
+    {
+        $foo = new \DateTime();
+
+        $entity = new EntityMock([
+            'foo' => $foo,
+        ]);
+
+        $this->assertSame($foo, $entity->foo());
+        $this->assertSame($foo, $entity->toArray()['foo']);
+    }
+
+    public function testItInitializeWithDateTimeImmutableAttribute(): void
+    {
+        $foo = new \DateTimeImmutable();
+
+        $entity = new EntityMock([
+            'foo' => $foo,
+        ]);
+
+        $this->assertSame($foo, $entity->foo());
+        $this->assertSame($foo, $entity->toArray()['foo']);
+    }
+
+    public function testItInitializeWithDateIntervalAttribute(): void
+    {
+        $foo = new \DateInterval('P1M');
+
+        $entity = new EntityMock([
+            'foo' => $foo,
+        ]);
+
+        $this->assertSame($foo, $entity->foo());
+        $this->assertSame($foo, $entity->toArray()['foo']);
+    }
+
+    public function testItInitializeWithDateTimeZoneAttribute(): void
+    {
+        $foo = new \DateTimeZone('UTC');
+
+        $entity = new EntityMock([
+            'foo' => $foo,
+        ]);
+
+        $this->assertSame($foo, $entity->foo());
+        $this->assertSame($foo, $entity->toArray()['foo']);
+    }
+
     public function testItInitializeWithCamelCaseAttribute(): void
     {
         $fooBar = 'fooBar';
@@ -182,6 +294,28 @@ class EntityTest extends TestCase
 
         $this->assertSame($fooBar, $entity->fooBar());
         $this->assertSame($fooBar, $entity->toArray()['fooBar']);
+    }
+
+    public function testItSetPascalCaseAttribute(): void
+    {
+        $FooBar = 'FooBar';
+
+        $entity = new EntityMock();
+        $entity->FooBar($FooBar);
+
+        $this->assertSame($FooBar, $entity->FooBar());
+        $this->assertSame($FooBar, $entity->toArray()['fooBar']);
+    }
+
+    public function testItSetUpperCaseAttribute(): void
+    {
+        $FOOBAR = 'FOOBAR';
+
+        $entity = new EntityMock();
+        $entity->FOOBAR($FOOBAR);
+
+        $this->assertSame($FOOBAR, $entity->FOOBAR());
+        $this->assertSame($FOOBAR, $entity->toArray()['fOOBAR']);
     }
 
     public function testItGetAsString(): void

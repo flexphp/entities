@@ -12,9 +12,11 @@ namespace FlexPHP\Entities\Tests\Mocks;
 use FlexPHP\Entities\Entity;
 
 /**
- * @method $this|string foo($foo = null)
- * @method $this|string bar($bar = null)
- * @method $this|string fooBar($fooBar = null)
+ * @method mixed foo($foo = null)
+ * @method mixed bar($bar = null)
+ * @method mixed fooBar($fooBar = null)
+ * @method mixed FooBar($FooBar = null)
+ * @method mixed FOOBAR($FOOBAR = null)
  */
 class EntityMock extends Entity
 {
