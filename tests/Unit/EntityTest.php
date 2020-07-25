@@ -28,7 +28,13 @@ class EntityTest extends TestCase
 
         $this->assertSame(null, $entity->foo());
         $this->assertSame(null, $entity->bar());
-        $this->assertSame([], $entity->toArray());
+        $this->assertSame([
+            'foo' => null,
+            'bar' => null,
+            'fooBar' => null,
+            'FooBar' => null,
+            'FOOBAR' => null,
+        ], $entity->toArray());
         $this->assertEquals(\json_encode([]), $entity);
     }
 
@@ -38,7 +44,13 @@ class EntityTest extends TestCase
 
         $this->assertSame(null, $entity->foo());
         $this->assertSame(null, $entity->bar());
-        $this->assertSame([], $entity->toArray());
+        $this->assertSame([
+            'foo' => null,
+            'bar' => null,
+            'fooBar' => null,
+            'FooBar' => null,
+            'FOOBAR' => null,
+        ], $entity->toArray());
         $this->assertEquals(\json_encode([]), (string)$entity);
     }
 
@@ -304,7 +316,7 @@ class EntityTest extends TestCase
         $entity->FooBar($FooBar);
 
         $this->assertSame($FooBar, $entity->FooBar());
-        $this->assertSame($FooBar, $entity->toArray()['fooBar']);
+        $this->assertSame($FooBar, $entity->toArray()['FooBar']);
     }
 
     public function testItSetUpperCaseAttribute(): void
@@ -315,7 +327,18 @@ class EntityTest extends TestCase
         $entity->FOOBAR($FOOBAR);
 
         $this->assertSame($FOOBAR, $entity->FOOBAR());
-        $this->assertSame($FOOBAR, $entity->toArray()['fOOBAR']);
+        $this->assertSame($FOOBAR, $entity->toArray()['FOOBAR']);
+    }
+
+    public function testItSetSnakeCaseAttribute(): void
+    {
+        $foo_bar = 'foo_bar';
+
+        $entity = new EntityMock();
+        $entity->foo_bar($foo_bar);
+
+        $this->assertSame($foo_bar, $entity->foo_bar());
+        $this->assertSame($foo_bar, $entity->toArray()['foo_bar']);
     }
 
     public function testItGetAsString(): void

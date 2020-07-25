@@ -17,7 +17,13 @@ use FlexPHP\Entities\Entity;
  * @method mixed fooBar($fooBar = null)
  * @method mixed FooBar($FooBar = null)
  * @method mixed FOOBAR($FOOBAR = null)
+ * @method mixed foo_bar($foo_bar = null)
  */
-class EntityMock extends Entity
+final class EntityMock extends Entity
 {
+    protected $foo;
+    protected $bar;
+    protected $fooBar;
+    protected $FooBar;
+    protected $FOOBAR;
 }

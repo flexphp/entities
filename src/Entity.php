@@ -12,18 +12,11 @@ namespace FlexPHP\Entities;
 abstract class Entity implements EntityInterface
 {
     /**
-     * Save attribute names hydrate on instance
-     *
-     * @var array<string>
+     * @param array<string, mixed> $properties
      */
-    private $attributesHydrated = [];
-
-    /**
-     * @param array<string, mixed> $attributes
-     */
-    public function __construct(array $attributes = [])
+    public function __construct(array $properties = [])
     {
-        $this->hydrate($attributes);
+        $this->hydrate($properties);
     }
 
     /**
@@ -32,8 +25,6 @@ abstract class Entity implements EntityInterface
     public function __set(string $name, $value): void
     {
         $this->{$name} = $value;
-
-        $this->attributesHydrated[] = $name;
     }
 
     /**
@@ -53,13 +44,11 @@ abstract class Entity implements EntityInterface
      */
     public function __call(string $name, array $arguments)
     {
-        $attribute = $this->snakeCase($name);
-
         if (\count($arguments)) {
-            $this->__set($attribute, $arguments[0]);
+            $this->__set($name, $arguments[0]);
         }
 
-        return $this->__get($attribute);
+        return $this->__get($name);
     }
 
     /**
@@ -69,7 +58,7 @@ abstract class Entity implements EntityInterface
      */
     public function __toString()
     {
-        return \json_encode($this->toArray(), \JSON_ERROR_NONE) ?: '';
+        return \json_encode(\array_filter($this->toArray()), \JSON_ERROR_NONE) ?: '';
     }
 
     /**
@@ -77,44 +66,18 @@ abstract class Entity implements EntityInterface
      */
     public function toArray(): array
     {
-        $toArray = [];
+        return \get_object_vars($this);
+    }
 
-        \array_map(function ($attribute) use (&$toArray): void {
-            if (\property_exists($this, $attribute)) {
-                $toArray[$this->camelCase($attribute)] = $this->{$attribute};
+    /**
+     * @param  array<string> $properties
+     */
+    private function hydrate(array $properties): void
+    {
+        foreach ($properties as $property => $value) {
+            if (\property_exists($this, $property)) {
+                $this->{$property} = $value;
             }
-        }, $this->attributesHydrated);
-
-        return $toArray;
-    }
-
-    /**
-     * @param  array<string> $attributes
-     */
-    private function hydrate(array $attributes): void
-    {
-        foreach ($attributes as $attribute => $value) {
-            $this->{$this->snakeCase($attribute)} = $value;
         }
-    }
-
-    /**
-     * Change to snake_case attribute name
-     */
-    private function snakeCase(string $attribute): string
-    {
-        return \strtolower(\preg_replace('~(?<=\\w)([A-Z])~', '_$1', $attribute) ?? $attribute);
-    }
-
-    /**
-     * Change to camelCase attribute name
-     */
-    private function camelCase(string $attribute): string
-    {
-        $string = \preg_replace_callback('/_(.?)/', function ($matches) {
-            return \ucfirst($matches[1]);
-        }, $attribute);
-
-        return $string ?? $attribute;
     }
 }
