@@ -44,7 +44,7 @@ abstract class Entity implements EntityInterface
      */
     public function __call(string $name, array $arguments)
     {
-        if (\count($arguments)) {
+        if (\count($arguments) > 0) {
             $this->__set($name, $arguments[0]);
         }
 

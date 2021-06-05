@@ -21,9 +21,28 @@ use FlexPHP\Entities\Entity;
  */
 final class EntityMock extends Entity
 {
+    /**
+     * @var mixed
+     */
     protected $foo;
+
+    /**
+     * @var mixed
+     */
     protected $bar;
+
+    /**
+     * @var mixed
+     */
     protected $fooBar;
+
+    /**
+     * @var mixed
+     */
     protected $FooBar;
+
+    /**
+     * @var mixed
+     */
     protected $FOOBAR;
 }
